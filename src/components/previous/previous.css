@@ -1,0 +1,8 @@
+.videos-prev {
+  margin: 100px auto;
+}
+
+.videos-prev video {
+  border-radius: 10%;
+  outline: none;
+}

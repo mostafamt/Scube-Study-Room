@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8;">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
+	<title>Paella Engage Example</title>
+	<script type="text/javascript" src="javascript/polyfill.min.js"></script>
+	<script type="text/javascript" src="javascript/jquery.min.js"></script>
+	<script type="text/javascript" src="javascript/lunr.min.js"></script>
+	<script type="text/javascript" src="javascript/paella_player.js"></script>
+
+	<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css" type="text/css" media="screen"
+		charset="utf-8">
+
+	<script>
+		function firstFunction() {
+			return new Promise((resolve, reject) => {
+				let y = 0
+				setTimeout(() => {
+					y = JSON.parse(localStorage.getItem('keyplayedLo'));
+					resolve(y)
+				}, 20)
+			})
+		}
+
+		async function doLoad() {
+
+			var playedLo = await firstFunction(); //forgot to close
+			var loobjcId = localStorage.getItem('loobjcId');
+			var lotitle = localStorage.getItem('labeltitle');
+			var mp4src = localStorage.getItem('label');
+			var audiosrc = localStorage.getItem('label');
+			var hostname = localStorage.getItem('hostname');
+			var noErrorLO = localStorage.getItem('noErrorLO');
+			var audioURL = localStorage.getItem('audioURL');
+
+			var vIDyoutube = localStorage.getItem('vIDyoutube');
+
+			var captionsurl = localStorage.getItem('labelvtt');
+			var adiotracklist = JSON.parse(localStorage.getItem('keyaudiotracklist')); //forgot to close
+
+			const IsMediaFile = localStorage.getItem('IsMediaFile');
+			var fileextention = mp4src.split(/[#?]/)[0].split('.').pop().trim();
+
+
+
+			if (loobjcId === '60afcf9c875cc3800d68d1a2') {
+
+				var playingdata =
+				{
+					"metadata": {
+						//playedLo.duration
+						"duration": 0,
+						"title": lotitle
+					},
+					"streams": [],
+					"frameList": [],
+					"captions": []
+				}
+
+				//if ()
+				//if (Object.keys(framelist).length === 0)
+				if (noErrorLO == 'true') {
+
+					if (fileextention === "mp4") {
+						var videosource = {
+							"sources": {
+								"mp4": [
+									{
+										"src": mp4src,
+										"mimetype": "video/mp4",
+										"res": {
+											"w": "1920",
+											"h": "1080"
+										}
+									}
+								]
+							},
+							"preview": "",
+							"type": "video",
+							"content": "presenter"
+						}
+
+
+						playingdata.streams.push(videosource);
+						playingdata.streams.push(
+							{
+								"sources": {
+									"image": [
+										{
+											"mimetype": "image/jpeg",
+											"frames": [
+												{
+													"time": 0,
+													"src": "5f1a11933c4996110194afd6_1.png"
+												},
+												{
+													"time": 30,
+													"src": "5f1a11933c4996110194afd6_2.png"
+												},
+												{
+													"time": 60,
+													"src": "5f1a11933c4996110194afd6_3.png"
+												},
+												{
+													"time": 90,
+													"src": "5f1a11933c4996110194afd6_4.png"
+												},
+												{
+													"time": 120,
+													"src": "5f1a11933c4996110194afd6_5.png"
+												},
+												{
+													"time": 150,
+													"src": "5f1a11933c4996110194afd6_6.png"
+												},
+												{
+													"time": 181,
+													"src": "5f1a11933c4996110194afd6_7.png"
+												}
+											],
+											"count": 7,
+											"duration": 155,
+											"res": {
+												"w": 1280,
+												"h": 720
+											}
+										}
+									]
+								},
+								"preview": "5f1a11933c4996110194afd6_1.png",
+								"type": "video",
+								"content": "presentation"
+							}
+
+						)
+						playingdata.frameList.push(
+
+							{
+								"id": "frame_0",
+								"mimetype": "image/jpeg",
+								"time": 0,
+								"url": "5f1a11933c4996110194afd6_1.png",
+								"thumb": "5f1a11933c4996110194afd6_1.png"
+							},
+							{
+								"id": "frame_30",
+								"mimetype": "image/jpeg",
+								"time": 30,
+								"url": "5f1a11933c4996110194afd6_2.png",
+								"thumb": "5f1a11933c4996110194afd6_2.png"
+							},
+							{
+								"id": "frame_60",
+								"mimetype": "image/jpeg",
+								"time": 60,
+								"url": "5f1a11933c4996110194afd6_3.png",
+								"thumb": "5f1a11933c4996110194afd6_3.png"
+							},
+							{
+								"id": "frame_90",
+								"mimetype": "image/jpeg",
+								"time": 90,
+								"url": "5f1a11933c4996110194afd6_4.png",
+								"thumb": "5f1a11933c4996110194afd6_4.png"
+							},
+							{
+								"id": "frame_120",
+								"mimetype": "image/jpeg",
+								"time": 120,
+								"url": "5f1a11933c4996110194afd6_5.png",
+								"thumb": "5f1a11933c4996110194afd6_5.png"
+							},
+							{
+								"id": "frame_150",
+								"mimetype": "image/jpeg",
+								"time": 150,
+								"url": "5f1a11933c4996110194afd6_6.png",
+								"thumb": "5f1a11933c4996110194afd6_6.png"
+							},
+							{
+								"id": "frame_181",
+								"mimetype": "image/jpeg",
+								"time": 181,
+								"url": "5f1a11933c4996110194afd6_7.png",
+								"thumb": "5f1a11933c4996110194afd6_7.png"
+							}
+
+						)
+
+
+						for (var i = 0; i < adiotracklist.length; i++) {
+							//	if (adiotracklist[i].signedurl==="")
+							//{
+
+							//}
+							//else
+
+							if (adiotracklist[i].signedurl) {
+								playingdata.streams.push(
+									{
+										"sources": {
+											"audio": [
+												{
+													"src": adiotracklist[i].signedurl
+												}
+											]
+										},
+										"preview": "",
+										"type": "audio",
+										"audioTag": adiotracklist[i].langCode
+									}
+								)
+
+
+							}
+
+						}
+
+						playingdata.captions = playedLo.vttSignedUrlarr;
+
+					}
+				}
+
+			}
+			else {
+				var playingdata =
+				{
+					"metadata": {
+						//playedLo.duration
+						"duration": 0,
+						"title": lotitle
+					},
+					"streams": [],
+					"frameList": [],
+					"captions": []
+				}
+
+				//if ()
+				//if (Object.keys(framelist).length === 0)
+				if (noErrorLO == 'true') {
+
+					if (fileextention === "mp4") {
+						var videosource = {
+							"sources": {
+								"mp4": [
+									{
+										"src": mp4src,
+										"mimetype": "video/mp4",
+										"res": {
+											"w": "1920",
+											"h": "1080"
+										}
+									}
+								]
+							},
+							"preview": "",
+							"type": "video",
+							"content": "presenter"
+						}
+
+
+						playingdata.streams.push(videosource);
+
+
+						for (var i = 0; i < adiotracklist.length; i++) {
+							// 	if (adiotracklist[i].signedurl==="")
+							// {
+
+							// }
+							// 	else
+							if (adiotracklist[i].signedurl) {
+								playingdata.streams.push(
+									{
+										"sources": {
+											"audio": [
+												{
+													"src": adiotracklist[i].signedurl
+												}
+											]
+										},
+										"preview": "",
+										"type": "audio",
+										"audioTag": adiotracklist[i].langCode
+									}
+								)
+
+
+							}
+
+						}
+
+						playingdata.captions = playedLo.vttSignedUrlarr;
+						if (playedLo.frameList) {
+							var framelist = playedLo.frameList//JSON.parse(localStorage.getItem('keyframelist')); //forgot to close
+							var framelist1 = [];
+							var framelist2 = [];
+							var imagesource = {
+								"sources": {
+									"image": [
+										{
+											"mimetype": "image/jpeg",
+											"frames": [],
+											"count": framelist.length,
+											"duration": 700,
+											"res": {
+												"w": 1920,
+												"h": 1200
+											}
+										}
+									]
+								},
+								"preview": "",
+								"type": "video",
+								"content": "presentation"
+							}
+							var totalDuration = 0;
+							for (var i = 0; i < framelist.length; i++) {
+
+								framelist2 = {
+									//"time": framelist[i].time,
+									"time": Math.round(framelist[i].startTime - 2),
+									"src": framelist[i].signedurl
+								}
+								imagesource.sources.image[0].frames.push(framelist2);
+								totalDuration = totalDuration + framelist[i].duration + 5;
+							}
+							//
+							imagesource.sources.image[0].duration = totalDuration;
+							playingdata.streams.push(imagesource);
+							//
+							playingdata.metadata.duration = totalDuration;
+
+							for (var i = 0; i < framelist.length; i++) {
+								if (i > 0) {
+									framelist1 = {
+										"id": "frame_".concat(Math.round(framelist[i].startTime - 2)),
+										"mimetype": "image/jpeg", "time": Math.round(framelist[i].startTime - 2), "url": framelist[i].signedurl, "thumb": framelist[i].signedurl
+									}
+								}
+								else {
+
+									framelist1 = {
+										"id": "frame_".concat(Math.round(framelist[i].startTime)),
+										"mimetype": "image/jpeg", "time": Math.round(framelist[i].startTime), "url": framelist[i].signedurl, "thumb": framelist[i].signedurl
+									}
+
+								}
+								playingdata.frameList.push(framelist1);
+							}
+
+
+						}
+
+
+
+
+					}
+
+					else if (mp4src.includes("media/smash-cut-audio-cover.jpg")) {
+						//           for (var i = 0; i < adiotracklist.length; i++) {
+						//             if (adiotracklist[i].signedurl === "") {
+						//             } else {
+						//               playingdata.streams.push({
+						//                 sources: {
+						//                   audio: [
+						//                     {
+						//                       src: adiotracklist[i].signedurl
+						//                     }
+						//                   ]
+						//                 },
+						//                 preview: "",
+						//                 type: "audio",
+						//                 audioTag: adiotracklist[i].langCode
+						//               });
+						//             }
+						//           }
+						// playingdata.streams.push({
+						// 			"sources": {
+						// 				"image": [
+						//       {
+						//         "mimetype": "image/jpg",
+						//         "frames": [
+
+						//         {
+						// 								"time": 0,
+						// 								"src": mp4src
+						// 							},
+						//         ],		"count": 1,
+
+						// 						"res": {
+						// 							"w": 1280,
+						// 							"h": 720
+						// 						}
+						//       }
+						// 				]
+						// 			},
+						// 			"preview": mp4src,
+						// 			"type":"video",
+						// 			"content":"presentation"
+						// 		})
+
+
+						var imagesource = {
+							sources: {
+								image: [
+									{
+										mimetype: "image/jpg",
+										frames: [],
+										count: 1,
+										// duration: framelist[0].duration,
+										res: {
+											w: "1920",
+											h: "1100"
+										}
+									}
+								]
+							},
+							preview: "",
+							type: "video",
+							content: "presentation"
+						};
+						framelist2 = {
+							time: 0,
+							src: mp4src
+						};
+						imagesource.sources.image[0].frames.push(framelist2);
+
+						playingdata.streams.push(imagesource);
+
+						framelist1 = {
+							id: "38487",
+							mimetype: "image/jpg",
+							time: 0,
+							url: mp4src,
+							thumb: mp4src,
+							page: 1,
+							//notes: framelist[i].notes,
+							//  audioList: framelist[i].audioList
+						};
+						//  playingdata.frameList.push(framelist1);
+
+
+						for (var i = 0; i < adiotracklist.length; i++) {
+							if (adiotracklist[i].signedurl === "") {
+							} else {
+								playingdata.streams.push({
+									sources: {
+										audio: [
+											{
+												src: adiotracklist[i].signedurl
+											}
+										]
+									},
+									preview: "",
+									type: "audio",
+									audioTag: adiotracklist[i].langCode
+								});
+							}
+						}
+						playingdata.captions = playedLo.vttSignedUrlarr;
+
+					}
+
+
+					else if (hostname === "www.youtube.com") {
+
+						var videosource = {
+
+							"sources": {
+								"youtube": [
+									{
+										"id": vIDyoutube,
+										"res": {
+											"w": 1280,
+											"h": 720
+										}
+									}
+								]
+							},
+							"preview": "",
+							"type": "video",
+							"content": "presenter"
+						}
+
+
+						playingdata.streams.push(videosource);
+
+						//موقتا
+						for (var i = 0; i < adiotracklist.length; i++) {
+							if (adiotracklist[i].signedurl === "" || typeof adiotracklist[i].signedurl === 'undefined') {
+
+							}
+							else {
+								playingdata.streams.push(
+									{
+										"sources": {
+											"audio": [
+												{
+													"src": adiotracklist[i].signedurl
+												}
+											]
+										},
+										"preview": "",
+										"type": "audio",
+										"audioTag": adiotracklist[i].langCode
+									}
+								)
+
+
+							}
+
+						}
+
+
+
+
+						playingdata.captions = playedLo.vttSignedUrlarr;
+
+
+
+
+					}
+
+					else {
+
+						var framelist = playedLo.frameList//JSON.parse(localStorage.getItem('keyframelist')); //forgot to close
+						var framelist1 = [];
+						var framelist2 = [];
+						var imagesource = {
+							"sources": {
+								"image": [
+									{
+										"mimetype": "image/jpeg",
+										"frames": [],
+										"count": framelist.length,
+										"duration": 700,
+										"res": {
+											"w": 1920,
+											"h": 1200
+										}
+									}
+								]
+							},
+							"preview": "",
+							"type": "video",
+							"content": "presentation"
+						}
+						var totalDuration = 0;
+						for (var i = 0; i < framelist.length; i++) {
+
+							framelist2 = {
+								//"time": framelist[i].time,
+								"time": Math.round(framelist[i].startTime - 2),
+								"src": framelist[i].signedurl
+							}
+							imagesource.sources.image[0].frames.push(framelist2);
+							totalDuration = totalDuration + framelist[i].duration + 5;
+						}
+						//
+						imagesource.sources.image[0].duration = totalDuration;
+						playingdata.streams.push(imagesource);
+						//
+						playingdata.metadata.duration = totalDuration;
+
+						for (var i = 0; i < framelist.length; i++) {
+							if (i > 0) {
+								framelist1 = {
+									"id": "frame_".concat(Math.round(framelist[i].startTime - 2)),
+									"mimetype": "image/jpeg", "time": Math.round(framelist[i].startTime - 2), "url": framelist[i].signedurl, "thumb": framelist[i].signedurl
+								}
+							}
+							else {
+
+								framelist1 = {
+									"id": "frame_".concat(Math.round(framelist[i].startTime)),
+									"mimetype": "image/jpeg", "time": Math.round(framelist[i].startTime), "url": framelist[i].signedurl, "thumb": framelist[i].signedurl
+								}
+
+							}
+							playingdata.frameList.push(framelist1);
+						}
+
+						for (var i = 0; i < adiotracklist.length; i++) {
+
+							if (adiotracklist[i].signedurl === "" || typeof adiotracklist[i].signedurl === 'undefined') {
+							}
+							else {
+
+								playingdata.streams.push(
+									{
+										"sources": {
+											"audio": [
+												{
+													"src": adiotracklist[i].signedurl
+												}
+											]
+										},
+										"preview": "",
+										"type": "audio",
+										"audioTag": adiotracklist[i].langCode
+									}
+								)
+
+							}
+						}
+
+						playingdata.captions = playedLo.vttSignedUrlarr;
+
+
+					}
+				}
+				else {
+					playingdata =
+					{
+						"metadata": {
+							//playedLo.duration
+							"duration": 0,
+							"title": "something went wrong"
+						},
+						"streams": [],
+						"frameList": [],
+						"captions": []
+					}
+					var imagesource = {
+						"sources": {
+							"image": [
+								{
+									"mimetype": "image/jpeg",
+									"frames": [],
+									"count": 1,
+									"duration": 0,
+									"res": {
+										"w": 1920,
+										"h": 1200
+									}
+								}
+							]
+						},
+						"preview": "",
+						"type": "video",
+						"content": "presentation"
+					}
+
+					framelist2 = {
+						"time": 0,
+						"src": "nolo.jpg"
+					}
+
+					imagesource.sources.image[0].frames.push(framelist2);
+					playingdata.streams.push(imagesource)
+
+				}
+
+
+			}
+
+
+
+
+			paella.load('playerContainer', { data: playingdata });
+		}
+	</script>
+</head>
+
+<body id="body" onload="doLoad()">
+	<div id="playerContainer" style="display:block;width:100%">
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8;">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name = "viewport" content = "user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
+		<title>Paella Engage Example</title>
+		<script type="text/javascript" src="javascript/polyfill.min.js"></script>
+		<script type="text/javascript" src="javascript/jquery.min.js"></script>
+		<script type="text/javascript" src="javascript/lunr.min.js"></script>
+		<script type="text/javascript" src="javascript/paella_player.js"></script>
+
+		<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css" type="text/css" media="screen" charset="utf-8">
+		
+		<script>
+
+            function doLoad() {
+
+var data ={
+	"metadata": {
+		"duration": 155,
+		"title": "La competencia de la iniciatddddddddiva"
+	},
+	"streams": [
+		{
+			"sources": {
+				"mp4": [
+					{
+						"src": "https://repository.paellaplayer.upv.es/multi-lang-audio/presenter.mp4",
+						"mimetype": "video/mp4",
+						"res": {
+							"w": "1920",
+							"h": "1080"
+						}
+					}
+				]
+			},
+			"preview": "",
+			"type":"video",
+			"content": "presenter"
+		},
+		{
+			"sources": {
+				"audio": [
+					{
+						"src": "https://repository.paellaplayer.upv.es/multi-lang-audio/audio-es.m4a"
+					}
+				]
+			},
+			"preview":"",
+			"type":"audio",
+			"audioTag":"en"
+		},
+        {
+			"sources": {
+				"audio": [
+					{
+						"src": "ar_audio.mpeg"
+					}
+				]
+			},
+			"preview":"",
+			"type":"audio",
+			"audioTag":"ar"
+		},
+		{
+			"sources": {
+				"image": [
+					{
+						"mimetype": "image/jpeg",
+						"frames": [
+							{
+								"time": 0,
+								"src": "test_1.png"
+							},
+							{
+								"time": 11,
+								"src": "test_2.png"
+							},
+							{
+								"time": 25,
+								"src": "test_3.png"
+							},
+							{
+								"time": 35,
+								"src": "test_4.png"
+							},
+							{
+								"time": 45,
+								"src": "test_5.png"
+							},
+							{
+								"time": 55,
+								"src": "test_6.png"
+							},
+							{
+								"time": 65,
+								"src": "test_7.png"
+							}
+						],
+						"count": 7,
+						"duration": 155,
+						"res": {
+							"w": 1280,
+							"h": 720
+						}
+					}
+				]
+			},
+			"preview": "test_1.png",
+			"type":"video",
+			"content":"presentation"
+		}
+	],
+	"frameList": [
+		{
+			"id": "frame_854",
+			"mimetype": "image/jpeg",
+			"time": 0,
+			"url": "test_1.png",
+			"thumb": "test_1.png"
+		},
+		{
+			"id": "frame_751",
+			"mimetype": "image/jpeg",
+			"time": 0,
+			"url": "test_2.png",
+			"thumb": "test_2.png"
+		},
+		{
+			"id": "frame_0",
+			"mimetype": "image/jpeg",
+			"time": 30,
+			"url": "test_3.png",
+			"thumb": "test_3.png"
+		},
+		{
+			"id": "frame_363",
+			"mimetype": "image/jpeg",
+			"time": 60,
+			"url": "test_4.png",
+			"thumb": "test_4.png"
+		},
+		{
+			"id": "frame_3631",
+			"mimetype": "image/jpeg",
+			"time": 90,
+			"url": "test_5.png",
+			"thumb": "test_5.png"
+		},
+		{
+			"id": "frame_3632",
+			"mimetype": "image/jpeg",
+			"time": 55,
+			"url": "test_6.png",
+			"thumb": "test_6.png"
+		},
+		{
+			"id": "frame_3633",
+			"mimetype": "image/jpeg",
+			"time": 65,
+			"url": "test_7.png",
+			"thumb": "test_7.png"
+		}
+	],
+	"captions": [
+		{
+			"lang": "en",
+			"text": "automatic transcript",
+			"format": "vtt",
+			"url": "captions.es.vtt"
+		}
+	]
+};
+                                   
+                                   data.metadata.title=localStorage.getItem('labeltitle');
+                                    data.streams[0].sources.mp4[0].src= localStorage.getItem('label');
+                                    data.streams[1].sources.audio[0].src= localStorage.getItem('label');
+                                    data.captions[0].url=localStorage.getItem('labelvtt');
+
+                                   
+
+                                    console.log(localStorage.getItem('loobjcId'));          
+
+switch (localStorage.getItem('loobjcId'))
+    {
+
+  case "5f3841ec7bf8c678354fc909":
+    data.streams[0]=data.streams[2];
+ data.streams[1]=data.streams[3];
+  delete data.streams[2];
+delete data.streams[3];
+  delete  data.captions;
+data.streams[0].sources.audio[0].src= "audio_only.m4a"
+
+  data.streams[1].sources.image[0].frames[0].src= "5f3841ec7bf8c678354fc909_1.png";
+data.streams[1].sources.image[0].frames[0].time="0";
+data.streams[1].sources.image[0].frames[1].src= "5f3841ec7bf8c678354fc909_2.png";
+data.streams[1].sources.image[0].frames[1].time="30";
+delete data.streams[1].sources.image[0].frames[2];
+delete data.streams[1].sources.image[0].frames[3]
+delete data.streams[1].sources.image[0].frames[4]
+delete data.streams[1].sources.image[0].frames[5]
+delete data.streams[1].sources.image[0].frames[6]
+data.frameList[0].url="5f3841ec7bf8c678354fc909_1.png";
+data.frameList[0].thumb="5f3841ec7bf8c678354fc909_1.png";
+data.frameList[0].time="0";
+data.frameList[1].url="5f3841ec7bf8c678354fc909_2.png";
+data.frameList[1].thumb="5f3841ec7bf8c678354fc909_2.png";
+data.frameList[1].time="30";
+delete data.frameList[2];
+delete data.frameList[3];
+delete data.frameList[4];
+delete data.frameList[5];
+delete data.frameList[6];
+
+    break;
+  case "5f3841d27bf8c678354fc908":
+  data.streams[0]=data.streams[2];
+ data.streams[1]=data.streams[3];
+  delete data.streams[2];
+delete data.streams[3];
+  delete  data.captions;
+data.streams[0].sources.audio[0].src= "audio_only.m4a"
+
+data.streams[1].sources.image[0].frames[0].src= "5f3841d27bf8c678354fc908_1.png";
+data.streams[1].sources.image[0].frames[0].time="0";
+data.streams[1].sources.image[0].frames[1].src= "5f3841d27bf8c678354fc908_2.png";
+data.streams[1].sources.image[0].frames[1].time="30";
+data.streams[1].sources.image[0].frames[2].src= "5f3841d27bf8c678354fc908_3.png";
+data.streams[1].sources.image[0].frames[2].time="60";
+//delete data.streams[1].sources.image[0].frames[2];
+delete data.streams[1].sources.image[0].frames[3]
+delete data.streams[1].sources.image[0].frames[4]
+delete data.streams[1].sources.image[0].frames[5]
+delete data.streams[1].sources.image[0].frames[6]
+data.frameList[0].url="5f3841d27bf8c678354fc908_1.png";
+data.frameList[0].thumb="5f3841d27bf8c678354fc908_1.png";
+data.frameList[0].time="0";
+data.frameList[1].url="5f3841d27bf8c678354fc908_2.png";
+data.frameList[1].thumb="5f3841d27bf8c678354fc908_2.png";
+data.frameList[1].time="30";
+data.frameList[2].url="5f3841d27bf8c678354fc908_3.png";
+data.frameList[2].thumb="5f3841d27bf8c678354fc908_3.png";
+data.frameList[2].time="60";
+//delete data.frameList[2];
+delete data.frameList[3];
+delete data.frameList[4];
+delete data.frameList[5];
+delete data.frameList[6];
+      
+    break;
+  case "5f38420d7bf8c678354fc90a":
+  data.streams[0]=data.streams[2];
+ data.streams[1]=data.streams[3];
+  delete data.streams[2];
+delete data.streams[3];
+  delete  data.captions;
+data.streams[0].sources.audio[0].src= "audio_only.m4a"
+
+  data.streams[1].sources.image[0].frames[0].src= "5f38420d7bf8c678354fc90a_1.png";
+data.streams[1].sources.image[0].frames[0].time="0";
+data.streams[1].sources.image[0].frames[1].src= "5f38420d7bf8c678354fc90a_2.png";
+data.streams[1].sources.image[0].frames[1].time="30";
+delete data.streams[1].sources.image[0].frames[2];
+delete data.streams[1].sources.image[0].frames[3]
+delete data.streams[1].sources.image[0].frames[4]
+delete data.streams[1].sources.image[0].frames[5]
+delete data.streams[1].sources.image[0].frames[6]
+data.frameList[0].url="5f38420d7bf8c678354fc90a_1.png";
+data.frameList[0].thumb="5f38420d7bf8c678354fc90a_2.png";
+data.frameList[0].time="0";
+data.frameList[1].url="5f38420d7bf8c678354fc90a_1.png";
+data.frameList[1].thumb="5f38420d7bf8c678354fc90a_2.png";
+data.frameList[1].time="30";
+delete data.frameList[2];
+delete data.frameList[3];
+delete data.frameList[4];
+delete data.frameList[5];
+delete data.frameList[6];
+
+    break;
+
+case "5f1a11933c4996110194afd6":
+data.streams[3].sources.image[0].frames[0].src= "5f1a11933c4996110194afd6_1.png";
+data.streams[3].sources.image[0].frames[0].time="0";
+data.streams[3].sources.image[0].frames[1].src= "5f1a11933c4996110194afd6_2.png";
+data.streams[3].sources.image[0].frames[1].time="30";
+data.streams[3].sources.image[0].frames[2].src= "5f1a11933c4996110194afd6_3.png";
+data.streams[3].sources.image[0].frames[2].time="60";
+data.streams[3].sources.image[0].frames[3].src= "5f1a11933c4996110194afd6_4.png";
+data.streams[3].sources.image[0].frames[3].time="90";
+data.streams[3].sources.image[0].frames[4].src= "5f1a11933c4996110194afd6_5.png";
+data.streams[3].sources.image[0].frames[4].time="120";
+data.streams[3].sources.image[0].frames[5].src= "5f1a11933c4996110194afd6_6.png";
+data.streams[3].sources.image[0].frames[5].time="150";
+data.streams[3].sources.image[0].frames[6].src= "5f1a11933c4996110194afd6_7.png";
+data.streams[3].sources.image[0].frames[6].time="181";
+data.frameList[0].url="5f1a11933c4996110194afd6_1.png";
+data.frameList[0].time="0";
+data.frameList[1].url="5f1a11933c4996110194afd6_2.png";
+data.frameList[1].time="30";
+data.frameList[2].url="5f1a11933c4996110194afd6_3.png";
+data.frameList[2].time="60";
+data.frameList[3].url="5f1a11933c4996110194afd6_4.png";
+data.frameList[3].time="90";
+data.frameList[4].url="5f1a11933c4996110194afd6_5.png";
+data.frameList[4].time="120";
+data.frameList[5].url="5f1a11933c4996110194afd6_6.png";
+data.frameList[5].time="150";
+data.frameList[6].url="5f1a11933c4996110194afd6_7.png";
+data.frameList[6].time="181";
+break;
+
+case "5f3c096b7bf8c678354fc90f":
+
+data.streams[0]=data.streams[2];
+ data.streams[1]=data.streams[3];
+  delete data.streams[2];
+delete data.streams[3];
+  delete  data.captions;
+data.streams[0].sources.audio[0].src= "audio_only.m4a"
+
+data.streams[1].sources.image[0].frames[0].src= "5f3c096b7bf8c678354fc90f_1.png";
+data.streams[1].sources.image[0].frames[0].time="0";
+data.streams[1].sources.image[0].frames[1].src= "5f3c096b7bf8c678354fc90f_2.png";
+data.streams[1].sources.image[0].frames[1].time="30";
+data.streams[1].sources.image[0].frames[2].src= "5f3c096b7bf8c678354fc90f_3.png";
+data.streams[1].sources.image[0].frames[2].time="60";
+data.streams[1].sources.image[0].frames[3].src= "5f3c096b7bf8c678354fc90f_4.png";
+data.streams[1].sources.image[0].frames[3].time="90";
+data.streams[1].sources.image[0].frames[4].src= "5f3c096b7bf8c678354fc90f_5.png";
+data.streams[1].sources.image[0].frames[4].time="120";
+data.streams[1].sources.image[0].frames[5].src= "5f3c096b7bf8c678354fc90f_6.png";
+data.streams[1].sources.image[0].frames[5].time="150";
+data.streams[1].sources.image[0].frames[6].src= "5f3c096b7bf8c678354fc90f_7.png";
+data.streams[1].sources.image[0].frames[6].time="181";
+data.frameList[0].url="5f3c096b7bf8c678354fc90f_1.png";
+data.frameList[0].time="0";
+data.frameList[1].url="5f3c096b7bf8c678354fc90f_2.png";
+data.frameList[1].time="30";
+data.frameList[2].url="5f3c096b7bf8c678354fc90f_3.png";
+data.frameList[2].time="60";
+data.frameList[3].url="5f3c096b7bf8c678354fc90f_4.png";
+data.frameList[3].time="90";
+data.frameList[4].url="5f3c096b7bf8c678354fc90f_5.png";
+data.frameList[4].time="120";
+data.frameList[5].url="5f3c096b7bf8c678354fc90f_6.png";
+data.frameList[5].time="150";
+data.frameList[6].url="5f3c096b7bf8c678354fc90f_7.png";
+data.frameList[6].time="181";
+data.streams[1].sources.image[0].res.w= "720";
+data.streams[1].sources.image[0].res.h= "1280";
+break;
+    default:
+    delete data.streams[3];
+    delete data.frameList;
+
+}
+
+
+
+
+
+
+                paella.load('playerContainer', { data: data });
+            }
+		</script>
+	</head>
+    <body id="body" onload="doLoad()">
+		<div id="playerContainer" style="display:block;width:100%">
+		</div>
+	</body>
+</html>
