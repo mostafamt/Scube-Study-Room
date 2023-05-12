@@ -1,20 +1,20 @@
-import React, { Component } from "react"
-import "./videoDescription.css"
-import CKEditor from "ckeditor4-react"
-import { UncontrolledTooltip } from "reactstrap"
+import React, { Component } from "react";
+import "./videoDescription.css";
+// import CKEditor from "ckeditor4-react"
+import { UncontrolledTooltip } from "reactstrap";
 
 ////////////////
 
-import Dialog from "@material-ui/core/Dialog"
-import DialogContent from "@material-ui/core/DialogContent"
-import Radio from "@material-ui/core/Radio"
-import RadioGroup from "@material-ui/core/RadioGroup"
-import DialogActions from "@material-ui/core/DialogActions"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import DialogContentText from "@material-ui/core/DialogContentText"
-import DialogTitle from "@material-ui/core/DialogTitle"
-import Button from "react-bootstrap/Button"
-import IconButton from "@material-ui/core/IconButton"
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import DialogActions from "@material-ui/core/DialogActions";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "react-bootstrap/Button";
+import IconButton from "@material-ui/core/IconButton";
 
 import {
   Fullscreen,
@@ -28,25 +28,25 @@ import {
   ArrowDropUp,
   Search,
   Close,
-} from "@material-ui/icons"
+} from "@material-ui/icons";
 
-import Quill from "quill"
-import ReactQuill from "react-quill"
-import "react-quill/dist/quill.snow.css"
+import Quill from "quill";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 //import "react-quill/dist/quill.bubble.css"
-import QuillImageDropAndPaste from "quill-image-drop-and-paste"
-import { pdfExporter } from "quill-to-pdf"
-import * as quillToWord from "quill-to-word"
-import screenfull from "screenfull"
-import { ImageResize } from "quill-image-resize-module"
-import katex from "katex"
-import "katex/dist/katex.min.css"
-import { saveAs } from "file-saver"
+import QuillImageDropAndPaste from "quill-image-drop-and-paste";
+import { pdfExporter } from "quill-to-pdf";
+import * as quillToWord from "quill-to-word";
+import screenfull from "screenfull";
+import { ImageResize } from "quill-image-resize-module";
+import katex from "katex";
+import "katex/dist/katex.min.css";
+import { saveAs } from "file-saver";
 
-import ColorPicker from "../../ColorPicker"
+import ColorPicker from "../../ColorPicker";
 
-const Size = Quill.import("attributors/style/size")
-const Font = Quill.import("attributors/style/font")
+const Size = Quill.import("attributors/style/size");
+const Font = Quill.import("attributors/style/font");
 
 Size.whitelist = [
   "10px",
@@ -63,23 +63,23 @@ Size.whitelist = [
   "36px",
   "48px",
   "72px",
-]
+];
 
-Quill.register(Size, true)
-Quill.register("modules/imageDropAndPaste", QuillImageDropAndPaste)
-Quill.register(Font, true)
-Quill.register("modules/imageResize", ImageResize)
-Font.whitelist = ["inconsolata", "roboto", "mirza", "arial"]
-window.katex = katex
+Quill.register(Size, true);
+Quill.register("modules/imageDropAndPaste", QuillImageDropAndPaste);
+Quill.register(Font, true);
+Quill.register("modules/imageResize", ImageResize);
+Font.whitelist = ["inconsolata", "roboto", "mirza", "arial"];
+window.katex = katex;
 
 //////////////////
 
 class Description extends Component {
   constructor(props) {
-    super(props)
-    this.quillRef = null // Quill instance
-    this.reactQuillRef = null //
-    this.quill = ""
+    super(props);
+    this.quillRef = null; // Quill instance
+    this.reactQuillRef = null; //
+    this.quill = "";
 
     this.quillModules = {
       history: {
@@ -92,52 +92,52 @@ class Description extends Component {
         handlers: {
           symbol: (value) => {
             if (value) {
-              const cursorPosition = this.quill.getSelection().index
-              this.quill.insertText(cursorPosition, value)
-              this.quill.setSelection(cursorPosition + value.length)
+              const cursorPosition = this.quill.getSelection().index;
+              this.quill.insertText(cursorPosition, value);
+              this.quill.setSelection(cursorPosition + value.length);
             }
           },
           maximize: () => {
             if (document.fullscreenEnabled) {
               screenfull.toggle(
                 document.querySelector(".devTextContainer-player")
-              )
+              );
               this.setState({
                 fullscreenEnabled: !this.state.fullscreenEnabled,
-              })
+              });
             } else {
-              console.log("Screenfull not enabled")
+              console.log("Screenfull not enabled");
             }
           },
 
           zoomIn: () => {
-            console.log(this.quill)
-            const { fontSizeIndx } = this.state
+            console.log(this.quill);
+            const { fontSizeIndx } = this.state;
             if (fontSizeIndx < Size.whitelist.length - 1) {
               this.quill.formatText(0, this.quill.getText().length, {
                 size: Size.whitelist[this.state.fontSizeIndx + 1],
-              })
-              this.setState({ fontSizeIndx: this.state.fontSizeIndx + 1 })
+              });
+              this.setState({ fontSizeIndx: this.state.fontSizeIndx + 1 });
             }
           },
           zoomOut: () => {
-            const { fontSizeIndx } = this.state
+            const { fontSizeIndx } = this.state;
             if (fontSizeIndx > 0) {
               this.quill.formatText(0, this.quill.getText().length, {
                 size: Size.whitelist[this.state.fontSizeIndx - 1],
-              })
-              this.setState({ fontSizeIndx: this.state.fontSizeIndx - 1 })
+              });
+              this.setState({ fontSizeIndx: this.state.fontSizeIndx - 1 });
             }
           },
           undo: () => {
-            return this.quill.history.undo()
+            return this.quill.history.undo();
           },
 
           redo: () => {
-            return this.quill.history.redo()
+            return this.quill.history.redo();
           },
           print: () => {
-            this.setState({ openPrintDialog: true })
+            this.setState({ openPrintDialog: true });
             //  this.saveToPdf()
           },
         },
@@ -154,18 +154,19 @@ class Description extends Component {
             key: 13,
             shiftKey: true,
             handler: (range, ctx) => {
-              this.quill.insertText(range.index, "\n")
+              this.quill.insertText(range.index, "\n");
             },
           },
           enter: {
             key: 13,
             handler: (range) => {
-              if (this.props.notesShow) this.quill.insertText(range.index, "\n")
+              if (this.props.notesShow)
+                this.quill.insertText(range.index, "\n");
             },
           },
         },
       },
-    }
+    };
     this.quillFormats = [
       "header",
       "bold",
@@ -188,7 +189,7 @@ class Description extends Component {
       "color",
       "background",
       "size",
-    ]
+    ];
     this.state = {
       fullscreenEnabled: false,
       //open: false,
@@ -203,7 +204,7 @@ class Description extends Component {
       searchText: "",
       searchArr: [],
       searchIndex: 0,
-    }
+    };
   }
   async componentDidMount() {
     // this.quillRef = null // Quill instance
@@ -212,19 +213,19 @@ class Description extends Component {
     // this.quill.formatText(0, this.quill.getText().length, {
     //   size: Size.whitelist[this.state.fontSizeIndx],
     // })
-    this.quill = this.reactQuillRef ? this.reactQuillRef.getEditor() : ""
+    this.quill = this.reactQuillRef ? this.reactQuillRef.getEditor() : "";
   }
   handleRadioBtnChange = (e) => {
-    this.setState({ selectedRadioBtn: e.target.value })
-  }
+    this.setState({ selectedRadioBtn: e.target.value });
+  };
   handleChange = (value, delta, source, editor) => {
     if (!editor) {
-      return
+      return;
     }
-    if (!this.quill) this.quill = editor
+    if (!this.quill) this.quill = editor;
 
-    if (this.state.searchMode) this.setState({ searchText: value })
-    else this.props.handleOnChange(value)
+    if (this.state.searchMode) this.setState({ searchText: value });
+    else this.props.handleOnChange(value);
 
     if (editor.getSelection())
       this.setState({
@@ -233,23 +234,28 @@ class Description extends Component {
           ...this.state.cursorIndices,
           editor.getSelection().index,
         ],
-      })
-  }
+      });
+  };
 
   quillToolbar = () => {
-    console.log(this.props.KeywordsShow, this.props.transcriptShow, this.props.notesShow, this.props.isH5p)
-    const { searchMode } = this.state
+    console.log(
+      this.props.KeywordsShow,
+      this.props.transcriptShow,
+      this.props.notesShow,
+      this.props.isH5p
+    );
+    const { searchMode } = this.state;
 
     if (document.querySelector(".ql-container.ql-snow"))
       document.querySelector(".ql-container.ql-snow").style.height = this.props
         .notesShow
         ? "315px"
-        : "370px"
+        : "370px";
     if (
       (!this.props.notesShow && !this.props.transcriptShow) ||
       this.props.isH5p
     )
-      return null
+      return null;
     return (
       <div id="toolbar">
         <div id="editingToolbar">
@@ -442,30 +448,30 @@ class Description extends Component {
         </div>
           */}
       </div>
-    )
-  }
+    );
+  };
   printNotes = async () => {
-    this.setState({ openPrintDialog: false, printNotesMode: false })
+    this.setState({ openPrintDialog: false, printNotesMode: false });
     //    document.getElementById("cover-spin").style.display = ""
-    const { selectedRadioBtn } = this.state
-    const fileName = this.props.topicTitle //.replace(/ /g, "_")
+    const { selectedRadioBtn } = this.state;
+    const fileName = this.props.topicTitle; //.replace(/ /g, "_")
 
     if (selectedRadioBtn === "1") {
-      const pdfAsBlob = await pdfExporter.generatePdf(this.quill.getContents())
-      saveAs(pdfAsBlob, `${fileName}.pdf`)
+      const pdfAsBlob = await pdfExporter.generatePdf(this.quill.getContents());
+      saveAs(pdfAsBlob, `${fileName}.pdf`);
     } else if (selectedRadioBtn === "2") {
       const docAsBlob = await quillToWord.generateWord(
         this.quill.getContents(),
         {
           exportAs: "blob",
         }
-      )
+      );
 
-      saveAs(docAsBlob, `${fileName}.docx`)
+      saveAs(docAsBlob, `${fileName}.docx`);
     }
 
     // document.getElementById("cover-spin").style.display = "none"
-  }
+  };
   render() {
     return (
       <div className={this.props.IsMediaFile ? "text-show-Mo" : "text-show"}>
@@ -489,7 +495,7 @@ class Description extends Component {
                 <ReactQuill
                   theme="snow"
                   ref={(el) => {
-                    this.reactQuillRef = el
+                    this.reactQuillRef = el;
                   }}
                   //                  readOnly={false}
                   value={
@@ -508,7 +514,7 @@ class Description extends Component {
                 <ReactQuill
                   theme="snow"
                   ref={(el) => {
-                    this.reactQuillRef = el
+                    this.reactQuillRef = el;
                   }}
                   readOnly={false}
                   value={
@@ -517,7 +523,7 @@ class Description extends Component {
                       : this.props.currentSummary.replace(/\r?\n/g, "<br />")
                   }
                   onKeyDown={(e) => {
-                    e.preventDefault()
+                    e.preventDefault();
                   }}
                   onChange={this.handleChange}
                   placeholder="Start typing here..."
@@ -585,7 +591,7 @@ class Description extends Component {
                           </a>
                         </span>
                       </div>
-                    )
+                    );
                   })}
                 </p>
               </div>
@@ -598,7 +604,7 @@ class Description extends Component {
               style={{ margin: "2px 2px", fontSize: "14px", width: "20%" }}
               onClick={(e) => {
                 if (e.detail === 0 || e.detail !== 0)
-                  this.props.onSummaryClick(e.target.value)
+                  this.props.onSummaryClick(e.target.value);
               }}
             >
               <option value="full_transcript">Transcript 100%</option>
@@ -612,8 +618,8 @@ class Description extends Component {
                 width: "20%",
               }}
               onClick={() => {
-                this.props.updateKeywordsCount()
-                this.props.onKeywordsClick()
+                this.props.updateKeywordsCount();
+                this.props.onKeywordsClick();
               }}
             >
               Keywords
@@ -622,8 +628,8 @@ class Description extends Component {
             <button
               className="btn btn-info"
               onClick={() => {
-                this.props.updateNotesCount()
-                this.props.onNotesClick()
+                this.props.updateNotesCount();
+                this.props.onNotesClick();
               }}
             >
               Notes
@@ -634,7 +640,7 @@ class Description extends Component {
               id="langSelect"
               style={{ margin: "2px 2px", fontSize: "14px", width: "20%" }}
               onChange={(e) => {
-                this.props.onTranslationClick(e.target.value)
+                this.props.onTranslationClick(e.target.value);
               }}
               //defaultValue={""}
             >
@@ -663,7 +669,7 @@ class Description extends Component {
               className="btn btn-info"
               disabled={!this.props.notesShow}
               onClick={() => {
-                this.props.saveNotes()
+                this.props.saveNotes();
               }}
             >
               Save
@@ -674,7 +680,7 @@ class Description extends Component {
           id="print-dialog"
           open={this.state.openPrintDialog}
           onClose={() => {
-            this.setState({ openPrintDialog: false })
+            this.setState({ openPrintDialog: false });
           }}
           aria-labelledby="form-dialog-title"
         >
@@ -683,7 +689,7 @@ class Description extends Component {
               style={{ float: "right" }}
               aria-label="close"
               onClick={() => {
-                this.setState({ openPrintDialog: false })
+                this.setState({ openPrintDialog: false });
               }}
             >
               <Close />
@@ -725,7 +731,7 @@ class Description extends Component {
           <DialogActions>
             <Button
               onClick={() => {
-                this.setState({ openPrintDialog: false })
+                this.setState({ openPrintDialog: false });
               }}
               color="secondary"
             >
@@ -737,8 +743,8 @@ class Description extends Component {
           </DialogActions>
         </Dialog>
       </div>
-    )
+    );
   }
 }
 
-export default Description
+export default Description;
