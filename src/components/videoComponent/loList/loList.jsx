@@ -1,24 +1,24 @@
-import React, { Component } from "react"
-import "./loListStyle.css"
+import React, { Component } from "react";
+import "./loListStyle.css";
 
-import CustomizedListItem from "./CustomizedListItem"
+import CustomizedListItem from "./CustomizedListItem";
 
 class loList extends Component {
   state = {
     currentURL: "",
     nextURLs: [],
-  }
+  };
 
   changeVideoSource(x) {
-    this.props.changeVideoSource(x)
+    this.props.changeVideoSource(x);
   }
   changeSelectedVideoIndex(x) {
-    this.props.changeSelectedVideoIndex(x)
+    this.props.changeSelectedVideoIndex(x);
   }
 
   handleUrlChange = (x) => {
-    this.props.handleUrlChange(x)
-  }
+    this.props.handleUrlChange(x);
+  };
 
   componentDidMount() {
     // this.handleUrlChange(this.props.newUrls);
@@ -33,7 +33,7 @@ class loList extends Component {
           width: "100%",
           height: "100%",
           borderBottom: "1px solid rgba(0,0,0,.12)",
-          maxWidth: "250px",
+          maxWidth: "350px",
         }}
       >
         <div
@@ -52,7 +52,6 @@ class loList extends Component {
               color: "#000",
               backgroundColor: "white",
               overflowY: "auto",
-              minWidth: "250px",
             }}
           >
             {" "}
@@ -126,8 +125,8 @@ class loList extends Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }
 
-export default loList
+export default loList;
