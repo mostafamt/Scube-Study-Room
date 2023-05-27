@@ -23,6 +23,7 @@ import { ArrowForward, ArrowBack, ArrowBackIos } from "@material-ui/icons";
 
 import Menu from "../Menu/Menu";
 import Modal from "../Menu/Modal/Modal";
+import VideoShow from "./VideoShow/VideoShow";
 
 const backendURL = "/player";
 
@@ -426,6 +427,7 @@ class Videoall extends Component {
     this.setState({ LObjID: loId });
 
     if (typeof loId !== "undefined") {
+      console.log("changeVideoSource function, conition line 430");
       language = this.state.selectedLanguage;
       this.setState({
         noErrorLO: true,
@@ -928,6 +930,7 @@ class Videoall extends Component {
   //-----------------------------------End of description
 
   render() {
+    console.log("VideoRow, videoSource= ", this.state.videoSource);
     const styleDiv = {
       marginTop: "0",
 
@@ -936,285 +939,206 @@ class Videoall extends Component {
     if (this.state.noError) {
       if (this.state.loading) {
         return (
-          <div className="row mr-0 ">
-            <div id="cover-spin" style={{ display: "none" }}></div>
-            {/* <ReactNotifications /> */}
+          <>
+            <div>
+              <div id="cover-spin" style={{ display: "none" }}></div>
+              {/* <ReactNotifications /> */}
 
-            <div
-              className="col-12 p-2 bg-white text-danger"
-              style={{
-                borderTop: "1px solid rgba(0,0,0,.12)",
-                borderBottom: "1px solid rgba(0,0,0,.12)",
-                padingRight: "5px",
-              }}
-            >
-              <Menu
-                onClick={() => {
-                  this.setState((prevState) => ({
-                    ...prevState,
-                    showModal: !prevState.showModal,
-                  }));
-                }}
-              />
-              <Button
-                className="btn btn-secondary"
+              <div
+                className="col-12 p-2 bg-white text-danger"
                 style={{
-                  width: "auto",
-                  height: "37px",
-                  padding: "revert",
-                  marginLeft: "15px",
+                  borderTop: "1px solid rgba(0,0,0,.12)",
+                  borderBottom: "1px solid rgba(0,0,0,.12)",
+                  padingRight: "5px",
                 }}
-                // onClick={() => {
-                //   if (document.referrer.includes("online.eduedges.com"))
-                //     window.history.go(this.state.navigationCounter);
-                //   else window.close();
-                // }}
               >
-                <ArrowBackIos style={{ fontSize: "small" }} />
-                Back
-              </Button>
-              <span>{`${this.state.mainTitle} > ${this.state.subTitle} > ${this.state.topicTitle}`}</span>
-            </div>
-
-            <div className="page-content " style={styleDiv}>
-              <div className="row" style={{ marginRight: "0" }}>
-                <Modal
-                  show={this.state.showModal}
-                  isCoursePlayer={this.state.isCoursePlayer}
-                  toc={this.state.toc}
-                  selectedLanguage={this.state.selectedLanguage}
-                  urls={this.state.urls}
-                  changeVideoSource={this.changeVideoSource.bind(this)}
-                  videoSource={this.state.videoSource}
-                  data={{ lo: this.state.lo }}
-                  handleUrlChange={this.handleUrlChange}
-                  changeTopicTitle={this.changeTopicTitle.bind(this)}
-                  changeSelectedIndex={this.changeSelectedIndex.bind(this)}
-                  topicHeader={this.state.topicTitle}
-                  los={this.state.los}
-                  selectedListIndex={this.state.selectedListIndex}
-                  selectedListIndexChangeHandler={
-                    this.selectedListIndexChangeHandler
-                  }
-                  updateNavigationCounter={this.updateNavigationCounter.bind(
-                    this
-                  )}
-                  // onLanguageSelect={this.onLanguageSelect.bind(this)}
-                  changeSelectedVideoIndex={this.changeSelectedVideoIndex}
-                  selectedListItemIndex={this.state.selectedListItemIndex}
-                  selectedListItemIndexChangeHandler={
-                    this.selectedListItemIndexChangeHandler
-                  }
-                  headers={this.state.headers}
-                  nextOrPrev={this.state.nextOrPrev}
-                  nextOrPrevHandler={this.nextOrPrevHandler}
-                  updateTranscriptCount={this.updateTranscriptCount}
-                  onSummaryClick={this.onSummaryClick}
-                  changeLanguage={this.changeLanguage.bind(this)}
+                <Menu
+                  onClick={() => {
+                    this.setState((prevState) => ({
+                      ...prevState,
+                      showModal: !prevState.showModal,
+                    }));
+                  }}
                 />
-                {/* {this.state.IsMediaFile === false ? (
-                  <div>
-                    <LoList
-                      isCoursePlayer={this.state.isCoursePlayer}
-                      toc={this.state.toc}
-                      selectedLanguage={this.state.selectedLanguage}
-                      urls={this.state.urls}
-                      changeVideoSource={this.changeVideoSource.bind(this)}
-                      videoSource={this.state.videoSource}
-                      data={{ lo: this.state.lo }}
-                      handleUrlChange={this.handleUrlChange}
-                      changeTopicTitle={this.changeTopicTitle.bind(this)}
-                      changeSelectedIndex={this.changeSelectedIndex.bind(this)}
-                      topicHeader={this.state.topicTitle}
-                      los={this.state.los}
-                      selectedListIndex={this.state.selectedListIndex}
-                      selectedListIndexChangeHandler={
-                        this.selectedListIndexChangeHandler
-                      }
-                      updateNavigationCounter={this.updateNavigationCounter.bind(
-                        this
-                      )}
-                      // onLanguageSelect={this.onLanguageSelect.bind(this)}
-                      changeSelectedVideoIndex={this.changeSelectedVideoIndex}
-                      selectedListItemIndex={this.state.selectedListItemIndex}
-                      selectedListItemIndexChangeHandler={
-                        this.selectedListItemIndexChangeHandler
-                      }
-                      headers={this.state.headers}
-                      nextOrPrev={this.state.nextOrPrev}
-                      nextOrPrevHandler={this.nextOrPrevHandler}
-                      updateTranscriptCount={this.updateTranscriptCount}
-                      onSummaryClick={this.onSummaryClick}
-                      changeLanguage={this.changeLanguage.bind(this)}
-                    />
-                  </div>
-                ) : null} */}
-
-                <div>
-                  {
-                    //this.state.PlayerType === 2 ? (
-                    // <div>
-                    //   <VideoCont
-                    //     isCoursePlayer={this.state.isCoursePlayer}
-                    //     topicTitle={this.state.topicTitle}
-                    //     toc={this.state.toc}
-                    //     videoVtt={this.state.videoVtt}
-                    //     videoSource={this.state.videoSource}
-                    //     language={this.state.language}
-                    //     previousHandler={this.previousHandler}
-                    //     nextHandler={this.nextHandler}
-                    //     vtts={this.state.vtts}
-                    //     // {this.state.toc[this.state.selectedvideoIndex]}
-                    //  />
-                    //</div>
-                    //  ) : (
-                    <div
-                      style={{
-                        marginTop: this.state.IsMediaFile ? "30px" : "20px",
-                        marginLeft:
-                          this.state.IsMediaFile || this.state.isH5p
-                            ? "50px"
-                            : "10px",
-                      }}
-                    >
-                      <PPlayer
-                        contentType={this.state.contentType}
-                        isH5p={this.state.isH5p}
-                        loobjectid={this.state.LObjID}
-                        topicTitle={this.state.topicTitle}
-                        tocs={this.state.toc}
-                        videoVtt={this.state.videoVtt}
-                        videoSource={this.state.videoSource}
-                        selectedLangName={this.state.selectedLangName}
-                        framelist={this.state.Framelist}
-                        audiotracklist={this.state.AudioTrackList}
-                        IsMediaFile={this.state.IsMediaFile}
-                        playedLo={this.state.playedLo}
-                        noErrorLO={this.state.noErrorLO}
-                        onTranslationClick={this.onTranslationClick}
-                        onUpdateCheckbox={this.onUpdateCheckbox}
-                        isCoursePlayer={this.state.isCoursePlayer}
-                        isNormal={this.state.isNormal}
-                        // isurlobject={this.state.isurlobject}
-                        playList={this.playlist}
-                        previousHandler={this.previousHandler}
-                        nextHandler={this.nextHandler}
-                      />{" "}
-                      <div
-                        className="row d-flex justify-content-center"
-                        style={{
-                          textAlign: "center",
-                          display: this.state.MofId ? "none" : "",
-                          marginBottom: "15px",
-                          marginTop: "5px",
-                        }}
-                      >
-                        {" "}
-                        <button
-                          className="btn btn-info"
-                          style={{
-                            marginRight: "5px",
-                            width: "30%",
-                            fontWeight: "large",
-                            display: this.state.MofId ? "none" : "",
-                          }}
-                          onClick={
-                            // const { toc, selectedListItemIndex } = this.state
-                            // const list = toc[0].subTopics[0].subSubTopics
-                            // let indx = list.findIndex(
-                            //   (item) => item.title === selectedListItemIndex
-                            // )
-
-                            // if (indx > 0) {
-                            //   this.selectedListItemIndexChangeHandler(
-                            //     list[indx - 1].title
-                            //   )
-                            //   this.changeTopicTitle(
-                            //     list[indx - 1].title,
-                            //     toc[0].subTopics[0].title
-                            //   )
-                            //   this.changeVideoSource(list[indx - 1].LOid)
-                            // }
-                            this.previousHandler
-                          }
-                        >
-                          <ArrowBack /> Previous
-                        </button>
-                        <button
-                          className="btn btn-info"
-                          style={{
-                            marginLeft: "5px",
-                            width: "30%",
-                            fontWeight: "large",
-                            display: this.state.MofId ? "none" : "",
-                          }}
-                          onClick={
-                            this.nextHandler
-                            // const { toc, selectedListItemIndex } = this.state
-                            // const list = toc[0].subTopics[0].subSubTopics
-                            // let indx = list.findIndex(
-                            //   (item) => item.title === selectedListItemIndex
-                            // )
-
-                            // if (indx === list.length - 1) indx = -1
-
-                            // this.selectedListItemIndexChangeHandler(
-                            //   list[indx + 1].title
-                            // )
-                            // this.changeTopicTitle(
-                            //   list[indx + 1].title,
-                            //   toc[0].subTopics[0].title
-                            // )
-                            // this.changeVideoSource(list[indx + 1].LOid)
-                          }
-                        >
-                          Next <ArrowForward />
-                        </button>{" "}
-                      </div>
-                    </div>
-                  }
-                </div>
-
-                {/* {this.state.teacherMode === false ?*/}
-                {this.state.isH5p ||
-                this.state.isNormal ||
-                (!this.state.transcript &&
-                  !this.state.summary25 &&
-                  !this.state.summary50 &&
-                  this.state.keywords.length === 0) ? null : (
-                  <div>
-                    <Description
-                      isH5p={this.state.isH5p}
-                      srcLanguage={this.state.srcLanguage}
-                      isCoursePlayer={this.state.isCoursePlayer}
-                      IsMediaFile={this.state.IsMediaFile}
-                      title={this.state.title}
-                      topicTitle={this.state.topicTitle}
-                      transcriptShow={this.state.transcriptShow}
-                      transcript={this.state.transcript}
-                      studentNotes={this.state.studentNotes}
-                      handleOnChange={this.handleOnChange}
-                      handleOnChange2={this.handleOnChange2}
-                      submit={this.submit}
-                      summaryShow={this.state.summaryShow}
-                      currentSummary={this.state.currentSummary}
-                      KeywordsShow={this.state.KeywordsShow}
-                      notesShow={this.state.notesShow}
-                      keywords={this.state.keywords}
-                      onSummaryClick={this.onSummaryClick}
-                      onTranslationClick={this.onTranslationClick}
-                      onKeywordsClick={this.onKeywordsClick}
-                      onNotesClick={this.onNotesClick}
-                      updateKeywordsCount={this.updateKeywordsCount}
-                      updateNotesCount={this.updateNotesCount}
-                      saveNotes={this.saveNotes.bind(this)}
-                      availableLanguage={this.state.playedLo.vttSignedUrlarr}
-                    />
-                  </div>
-                )}
+                <Button
+                  className="btn btn-secondary"
+                  style={{
+                    width: "auto",
+                    height: "37px",
+                    padding: "revert",
+                    marginLeft: "15px",
+                  }}
+                  // onClick={() => {
+                  //   if (document.referrer.includes("online.eduedges.com"))
+                  //     window.history.go(this.state.navigationCounter);
+                  //   else window.close();
+                  // }}
+                >
+                  <ArrowBackIos style={{ fontSize: "small" }} />
+                  Back
+                </Button>
+                <span>{`${this.state.mainTitle} > ${this.state.subTitle} > ${this.state.topicTitle}`}</span>
               </div>
+
+              {this.state.isNormal ? (
+                <VideoShow {...this.state} {...this.props} />
+              ) : (
+                <>
+                  <div className="page-content " style={styleDiv}>
+                    <div className="row" style={{ marginRight: "0" }}>
+                      <Modal
+                        show={this.state.showModal}
+                        isCoursePlayer={this.state.isCoursePlayer}
+                        toc={this.state.toc}
+                        selectedLanguage={this.state.selectedLanguage}
+                        urls={this.state.urls}
+                        changeVideoSource={this.changeVideoSource.bind(this)}
+                        videoSource={this.state.videoSource}
+                        data={{ lo: this.state.lo }}
+                        handleUrlChange={this.handleUrlChange}
+                        changeTopicTitle={this.changeTopicTitle.bind(this)}
+                        changeSelectedIndex={this.changeSelectedIndex.bind(
+                          this
+                        )}
+                        topicHeader={this.state.topicTitle}
+                        los={this.state.los}
+                        selectedListIndex={this.state.selectedListIndex}
+                        selectedListIndexChangeHandler={
+                          this.selectedListIndexChangeHandler
+                        }
+                        updateNavigationCounter={this.updateNavigationCounter.bind(
+                          this
+                        )}
+                        // onLanguageSelect={this.onLanguageSelect.bind(this)}
+                        changeSelectedVideoIndex={this.changeSelectedVideoIndex}
+                        selectedListItemIndex={this.state.selectedListItemIndex}
+                        selectedListItemIndexChangeHandler={
+                          this.selectedListItemIndexChangeHandler
+                        }
+                        headers={this.state.headers}
+                        nextOrPrev={this.state.nextOrPrev}
+                        nextOrPrevHandler={this.nextOrPrevHandler}
+                        updateTranscriptCount={this.updateTranscriptCount}
+                        onSummaryClick={this.onSummaryClick}
+                        changeLanguage={this.changeLanguage.bind(this)}
+                      />
+
+                      <div>
+                        <div
+                          style={{
+                            marginTop: this.state.IsMediaFile ? "30px" : "20px",
+                            marginLeft:
+                              this.state.IsMediaFile || this.state.isH5p
+                                ? "50px"
+                                : "10px",
+                          }}
+                        >
+                          <PPlayer
+                            contentType={this.state.contentType}
+                            isH5p={this.state.isH5p}
+                            loobjectid={this.state.LObjID}
+                            topicTitle={this.state.topicTitle}
+                            tocs={this.state.toc}
+                            videoVtt={this.state.videoVtt}
+                            videoSource={this.state.videoSource}
+                            selectedLangName={this.state.selectedLangName}
+                            framelist={this.state.Framelist}
+                            audiotracklist={this.state.AudioTrackList}
+                            IsMediaFile={this.state.IsMediaFile}
+                            playedLo={this.state.playedLo}
+                            noErrorLO={this.state.noErrorLO}
+                            onTranslationClick={this.onTranslationClick}
+                            onUpdateCheckbox={this.onUpdateCheckbox}
+                            isCoursePlayer={this.state.isCoursePlayer}
+                            isNormal={this.state.isNormal}
+                            // isurlobject={this.state.isurlobject}
+                            playList={this.playlist}
+                            previousHandler={this.previousHandler}
+                            nextHandler={this.nextHandler}
+                          />{" "}
+                          <div
+                            className="row d-flex justify-content-center"
+                            style={{
+                              textAlign: "center",
+                              display: this.state.MofId ? "none" : "",
+                              marginBottom: "15px",
+                              marginTop: "5px",
+                            }}
+                          >
+                            {" "}
+                            <button
+                              className="btn btn-info"
+                              style={{
+                                marginRight: "5px",
+                                width: "30%",
+                                fontWeight: "large",
+                                display: this.state.MofId ? "none" : "",
+                              }}
+                              onClick={this.previousHandler}
+                            >
+                              <ArrowBack /> Previous
+                            </button>
+                            <button
+                              className="btn btn-info"
+                              style={{
+                                marginLeft: "5px",
+                                width: "30%",
+                                fontWeight: "large",
+                                display: this.state.MofId ? "none" : "",
+                              }}
+                              onClick={this.nextHandler}
+                            >
+                              Next <ArrowForward />
+                            </button>{" "}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* {this.state.teacherMode === false ?*/}
+                      {this.state.isH5p ||
+                      this.state.isNormal ||
+                      (!this.state.transcript &&
+                        !this.state.summary25 &&
+                        !this.state.summary50 &&
+                        this.state.keywords.length === 0) ? null : (
+                        <div>
+                          <Description
+                            isH5p={this.state.isH5p}
+                            srcLanguage={this.state.srcLanguage}
+                            isCoursePlayer={this.state.isCoursePlayer}
+                            IsMediaFile={this.state.IsMediaFile}
+                            title={this.state.title}
+                            topicTitle={this.state.topicTitle}
+                            transcriptShow={this.state.transcriptShow}
+                            transcript={this.state.transcript}
+                            studentNotes={this.state.studentNotes}
+                            handleOnChange={this.handleOnChange}
+                            handleOnChange2={this.handleOnChange2}
+                            submit={this.submit}
+                            summaryShow={this.state.summaryShow}
+                            currentSummary={this.state.currentSummary}
+                            KeywordsShow={this.state.KeywordsShow}
+                            notesShow={this.state.notesShow}
+                            keywords={this.state.keywords}
+                            onSummaryClick={this.onSummaryClick}
+                            onTranslationClick={this.onTranslationClick}
+                            onKeywordsClick={this.onKeywordsClick}
+                            onNotesClick={this.onNotesClick}
+                            updateKeywordsCount={this.updateKeywordsCount}
+                            updateNotesCount={this.updateNotesCount}
+                            saveNotes={this.saveNotes.bind(this)}
+                            availableLanguage={
+                              this.state.playedLo.vttSignedUrlarr
+                            }
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-          </div>
+          </>
         );
       } else {
         return <div id="cover-spin" style={{ backgroundColor: "white" }}></div>;
