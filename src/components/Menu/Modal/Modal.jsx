@@ -4,8 +4,12 @@ import LoList from "../../videoComponent/loList/loList";
 
 const Modal = (props) => {
   return (
-    props.show && (
-      <div className={styles.modal}>
+    <>
+      {props.show && (
+        <div className={`${styles.backdrop}`} onClick={props.close}></div>
+      )}
+
+      <div className={`${styles.modal} ${props.show && styles.active} `}>
         <LoList
           isCoursePlayer={props.isCoursePlayer}
           toc={props.toc}
@@ -36,7 +40,7 @@ const Modal = (props) => {
           changeLanguage={props.changeLanguage}
         />
       </div>
-    )
+    </>
   );
 };
 

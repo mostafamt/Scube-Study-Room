@@ -10,29 +10,20 @@ import PPlayer from "./PaellPlayer";
 //import axios from "axios"
 import Button from "react-bootstrap/Button";
 
-import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
+// import { confirmAlert } from "react-confirm-alert";
+// import "react-confirm-alert/src/react-confirm-alert.css";
 
 // import "react-notifications-component/dist/theme.css"
-import { store } from "react-notifications-component";
+// import { store } from "react-notifications-component";
 // import ReactNotifications from "react-notifications-component"
 
 import axios from "../../axios";
 
 import { ArrowForward, ArrowBack, ArrowBackIos } from "@material-ui/icons";
 
-import Menu from "../Menu/Menu";
-import Modal from "../Menu/Modal/Modal";
-import VideoShow from "./VideoShow/VideoShow";
-import Navbar from "../Navbar/Navbar";
-import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
-import BackButton from "../BackButton/BackButton";
-import OldVideoRow from "./OldVideoRow";
-import Footer from "../../Footer/Footer";
-
 const backendURL = "/player";
 
-class Videoall extends Component {
+class OldVideoRow extends Component {
   state = {
     // PlayerType: 1,
     LObjID: 0,
@@ -89,10 +80,6 @@ class Videoall extends Component {
     navigationCounter: -1,
     contentType: "",
     isNormal: false,
-    showModal: false,
-  };
-  onUpdateCheckbox = (val) => {
-    // this.onTranslationClick(this.state.selectedLanguage, val)
   };
 
   flatten = (arr, depth = 1) => {
@@ -110,6 +97,7 @@ class Videoall extends Component {
 
   nextHandler = (e) => {
     if (this.state.selectedvideoIndex === this.state.los.length) return;
+    console.log(this.state.selectedvideoIndex);
     this.setState((prevstate) => ({
       selectedvideoIndex: prevstate.selectedvideoIndex + 1,
     }));
@@ -117,6 +105,7 @@ class Videoall extends Component {
     if (
       typeof this.state.los[this.state.selectedvideoIndex + 1] !== "undefined"
     ) {
+      console.log("next");
       this.changeVideoSource(
         this.state.los[this.state.selectedvideoIndex + 1].id,
         this.state.selectedLanguage
@@ -156,24 +145,15 @@ class Videoall extends Component {
     this.setState({ selectedvideoIndex: x });
   };
 
-  notify = (type, title, message, duration = 4000) => {
-    store.addNotification({
-      title,
-      message,
-      type,
-      container: "bottom-right",
-      animationIn: ["animated", "fadeIn"],
-      animationOut: ["animated", "fadeOut"],
-      dismiss: {
-        duration,
-      },
-    });
-  };
-
   handleSource = () => {
+    console.log(this.state.toc);
     this.state.toc.forEach((topic) => {
+      console.log(topic);
       topic.subTopics.forEach((subTopic) => {
+        console.log(subTopic);
         subTopic.subSubTopics.forEach((lo) => {
+          console.log("looooooo");
+          console.log(lo);
           if (lo)
             this.setState({
               los: [...this.state.los, lo],
@@ -206,9 +186,6 @@ class Videoall extends Component {
     this.setState({ selectedListItemIndex: x });
   };
 
-  // handleUrlChange = x => {
-  //   this.setState({ urls: x });
-  // };
   changeSelectedIndex(i) {
     this.setState({
       selectedvideoIndex: i,
@@ -226,14 +203,16 @@ class Videoall extends Component {
   }
 
   componentDidMount() {
-    this.setState((prevState) => ({ ...prevState, loading: true }));
     const query = new URLSearchParams(window.location.search);
     let courseCode = query.get("courseCode");
     let lessonCode = query.get("lessonCode");
     let MoId = query.get("MoId");
     let playlist = query.get("playList");
     let play_data = query.get("play_data");
-
+    console.log(
+      "🚀 ~ file: videoRow.jsx ~ line 212 ~ Videoall ~ componentDidMount ~ play_data",
+      play_data
+    );
     if (MoId) {
       this.setState({ MofId: MoId, IsMediaFile: true });
       this.changeVideoSource(MoId, "en");
@@ -247,7 +226,6 @@ class Videoall extends Component {
             mainTitle: res.data.title,
           });
           this.handleSource();
-
           this.changeVideoSource(
             this.state.los[this.state.selectedvideoIndex].LOid,
             "en"
@@ -256,26 +234,40 @@ class Videoall extends Component {
             this.state.los[this.state.selectedvideoIndex].title,
             this.state.subTitles[this.state.selectedvideoIndex]
           );
-
           this.selectedListItemIndexChangeHandler(
             this.state.headers[this.state.selectedvideoIndex]
           );
+          /// }
+          this.setState({
+            loading: true,
+          });
         })
         .catch((err) => {
           this.setState({
             noError: false,
           });
+          console.log(err);
+          // handle err
         });
     } else if (playlist) {
       let parsejson = JSON.parse(atob(playlist));
-
+      console.log(
+        "🚀 ~ file: videoRow.jsx ~ line 286 ~ Videoall ~ componentDidMount ~ parsejson",
+        parsejson
+      );
+      const topics = [
+        {
+          title: parsejson.title,
+          subTopics: parsejson.subSubTopics,
+        },
+      ];
+      console.log(topics.subTopics);
       setTimeout(() => {
         this.setState({
           toc: [{ subTopics: parsejson.subSubTopics, title: parsejson.title }],
           mainTitle: parsejson.title,
         });
         this.flatten2(parsejson.subSubTopics);
-
         this.handleSource2();
         this.selectedListItemIndexChangeHandler(
           parsejson.subSubTopics[0].title
@@ -283,6 +275,9 @@ class Videoall extends Component {
         this.changeTopicTitle(parsejson.subSubTopics[0].title, parsejson.title);
         this.changeVideoSource(parsejson.subSubTopics[0].LOid);
       }, 30);
+      this.setState({
+        loading: true,
+      });
     } else if (play_data) {
       const decoded_play_data = JSON.parse(atob(play_data));
       axios.get(`/lom/playlist/${decoded_play_data.id}`).then((res) => {
@@ -302,16 +297,27 @@ class Videoall extends Component {
           this.setState({ toc: res.data.playList });
         }
       });
+      //   this.handleSource()
+      //   this.selectedListItemIndexChangeHandler(parsejson.subSubTopics[0].title)
+      //   this.changeTopicTitle(parsejson.subSubTopics[0].title, parsejson.title)
+      //   this.changeVideoSource(parsejson.subSubTopics[0].LOid)
+      // }, 30)
+      this.setState({
+        loading: true,
+      });
+    } else {
+      this.setState({ loading: true });
     }
-    this.setState((prevState) => ({ ...prevState, loading: false }));
   }
 
   flatten = (arr) => {
     arr.forEach((item) => {
       item.objects.forEach((lo) => {
+        console.log(lo);
         if (lo.id)
           this.setState({
             los: [...this.state.los, lo],
+            //        subTitles: [...this.state.subTitles, subTopic.title],
             headers: [...this.state.headers, lo.title],
           });
         if (Array.isArray(item.children)) {
@@ -322,18 +328,23 @@ class Videoall extends Component {
   };
   flatten2 = (arr) => {
     arr.forEach((lo) => {
+      console.log(lo);
       if (lo && lo.LOid)
         this.setState({
           los: [...this.state.los, lo],
+          //        subTitles: [...this.state.subTitles, subTopic.title],
           headers: [...this.state.headers, lo.title],
         });
     });
   };
 
   changeVideoSource(loId, language = "en") {
+    // document.getElementById("cover-spin").style.display = "";
+    this.setState((prevState) => ({ ...prevState, loading: true }));
+
     this.setState({ LObjID: loId });
 
-    if (loId) {
+    if (typeof loId !== "undefined") {
       language = this.state.selectedLanguage;
       this.setState({
         noErrorLO: true,
@@ -373,10 +384,21 @@ class Videoall extends Component {
             topicTitle: response.data.title,
             currentSummary: response.data.transcript,
             keywords: response.data.keywords,
+            loading: true,
             Framelist: response.data.frameList,
             AudioTrackList: response.data.audioList,
             playedLo: response.data,
           });
+
+          if (this.state.loading)
+            document.getElementById("cover-spin").style.display = "none";
+          if ("frameList" in response.data) {
+            document.getElementById("scales").style.visibility = "visible";
+            document.getElementById("label10").style.visibility = "visible";
+          } else {
+            document.getElementById("scales").style.visibility = "hidden";
+            document.getElementById("label10").style.visibility = "hidden";
+          }
 
           if (this.state.teacherMode === false) {
             this.onSummaryClick("full_transcript");
@@ -391,8 +413,7 @@ class Videoall extends Component {
                       /\r?\n/g,
                       "<br />"
                     ),
-                  }); //+"." })
-                ///i added dot here for enable editing/
+                  });
               })
               .catch((err) => {
                 this.setState({
@@ -410,8 +431,10 @@ class Videoall extends Component {
         })
 
         .catch((err) => {
+          console.log(err);
           this.setState({
             noErrorLO: false,
+            loading: true,
           });
           this.setState({
             videoSource: "",
@@ -422,6 +445,7 @@ class Videoall extends Component {
             // topicTitle: "",
             currentSummary: "",
             keywords: [],
+            loading: true,
             Framelist: {},
             AudioTrackList: {},
             playedLo: {},
@@ -437,6 +461,7 @@ class Videoall extends Component {
         topicTitle: "",
         currentSummary: "",
         keywords: [],
+        loading: true,
         Framelist: {},
         AudioTrackList: {},
         playedLo: {},
@@ -445,9 +470,8 @@ class Videoall extends Component {
       this.onSummaryClick("full_transcript");
     }
     this.onSummaryClick("full_transcript");
+    this.setState((prevState) => ({ ...prevState, loading: false }));
   }
-
-  //-------------------For description
   updateSummaryCount = () => {
     this.setState({
       keywordsCount: 1,
@@ -492,8 +516,6 @@ class Videoall extends Component {
       lo = this.state.toc[this.state.selectedvideoIndex];
     }
 
-    //const loId = this.state.isCoursePlayer ? lo.LOid : lo._id;
-
     var loId;
     if (this.state.isCoursePlayer) {
       if (this.state.MofId) {
@@ -505,9 +527,6 @@ class Videoall extends Component {
     } else {
       loId = lo._id;
     }
-    // const language = lo.availableLanguages.find(item => {
-    //   return item.languageCode === lang;
-    // });
 
     valchk = document.getElementById("scales").checked;
     var requestString = `${backendURL}/getPlayedLo/${loId}/${lang}`;
@@ -540,16 +559,16 @@ class Videoall extends Component {
           videoVtt: response.data.vttSignedUrl,
           playedLo: response.data,
         });
-        // document.getElementById("1010").contentDocument.location.reload(true)
         if (valchk) {
           document.getElementById("1010").contentDocument.location.reload(true);
         } else {
         }
-
         this.onSummaryClick("full_transcript");
       })
       .catch((error) => {
         document.getElementById("cover-spin").style.display = "none";
+
+        console.log(error);
       });
   };
 
@@ -614,36 +633,19 @@ class Videoall extends Component {
             videoVtt: response.data.vttSignedUrl,
             playedLo: response.data,
           });
-          //document.getElementById("1010").contentDocument.location.reload(true)
-
-          // window.location.reload()
 
           this.onSummaryClick("full_transcript");
-
-          // window.location.reload();
         })
         .catch((error) => {
           document.getElementById("cover-spin").style.display = "none";
           window.location.reload();
+
+          console.log(error);
         });
     }
-    //document.getElementById("1010").contentDocument.location.reload(true)
   };
 
-  // notes for course player & keywords for lom
   handleOnChange = (value) => {
-    // if (this.state.PlayerType) {
-    //   this.setState({
-    //     studentNotes: evt.editor.getData(),
-    //   })
-    // } else {
-    //   const arr = evt.editor.getData().split("\n")
-    //   this.setState({ keywords: [] })
-    //   arr.map((item, index) => {
-    //     if (item && item !== "&nbsp;")
-    //       this.state.keywords.push(item.replace("<p>", "").replace("</p>", ""))
-    //   })
-    // }
     if (this.state.notesShow) this.setState({ studentNotes: value });
     else if (this.state.transcriptShow)
       this.setState({ currentSummary: value });
@@ -654,10 +656,6 @@ class Videoall extends Component {
   };
 
   handleOnChange2 = (evt) => {
-    // const data = evt.editor
-    //   .getData()
-    //   .replace(new RegExp("<p>", "g"), "")
-    //   .replace(new RegExp("<p/>", "g"), "")
     if (this.state.summaryPercent === "25") {
       this.setState({
         summary25: evt.editor.getData(),
@@ -692,6 +690,7 @@ class Videoall extends Component {
         this.notify("success", "Success", `Your notes saved successfully.`);
       })
       .catch((err) => {
+        console.log(err);
         this.notify("danger", "", `An error occured while saving your notes.`);
       });
   };
@@ -747,83 +746,87 @@ class Videoall extends Component {
     }
   };
 
-  closeHandler = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      showModal: !prevState.showModal,
-    }));
-  };
-
   render() {
-    const titles = [
-      this.state.mainTitle,
-      this.state.subTitle,
-      this.state.topicTitle,
-    ];
+    const styleDiv = {
+      marginTop: "0",
 
-    console.log(this.state.loading);
+      marginLeft: "3%",
+    };
 
     return (
-      <>
-        <Modal
-          show={this.state.showModal}
-          close={this.closeHandler}
-          isCoursePlayer={this.props.isCoursePlayer}
-          toc={this.props.toc}
-          selectedLanguage={this.props.selectedLanguage}
-          urls={this.props.urls}
-          changeVideoSource={this.props.changeVideoSource}
-          videoSource={this.props.videoSource}
-          data={{ lo: this.props.lo }}
-          handleUrlChange={this.props.handleUrlChange}
-          changeTopicTitle={this.props.changeTopicTitle}
-          changeSelectedIndex={this.props.changeSelectedIndex}
-          topicHeader={this.props.topicHeader}
-          los={this.props.los}
-          selectedListIndex={this.props.selectedListIndex}
-          selectedListIndexChangeHandler={
-            this.props.selectedListIndexChangeHandler
-          }
-          updateNavigationCounter={this.props.updateNavigationCounter}
-          // onLanguageSelect={this.props.onLanguageSelect this.onLanguageSelect.bind(this)}
-          changeSelectedVideoIndex={this.props.changeSelectedVideoIndex}
-          selectedListItemIndex={this.props.selectedListItemIndex}
-          selectedListItemIndexChangeHandler={
-            this.props.selectedListItemIndexChangeHandler
-          }
-          headers={this.props.headers}
-          nextOrPrev={this.props.nextOrPrev}
-          nextOrPrevHandler={this.props.nextOrPrevHandler}
-          updateTranscriptCount={this.props.updateTranscriptCount}
-          onSummaryClick={this.props.onSummaryClick}
-          changeLanguage={this.props.changeLanguage}
-        />
-        <Navbar
-          onClick={() => {
-            this.setState((prevState) => ({
-              ...prevState,
-              showModal: !prevState.showModal,
-            }));
-          }}
-        />
-        <Breadcrumbs titles={titles} />
-        <div className="container">
-          <BackButton to="https://ipsznc.scube-edutech.com" />
-        </div>
+      <div className="row mr-0 ">
+        <div id="cover-spin" style={{ display: "none" }}></div>
 
-        <div>
-          {this.state.loading ? (
-            <span>Loading</span>
-          ) : this.state.isNormal ? (
-            <VideoShow {...this.state} {...this.props} />
-          ) : (
-            <OldVideoRow videoSource={this.props.videoSource} />
-          )}
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-6">
+              {/* <h1>Left column</h1> */}
+              <PPlayer
+                contentType={this.state.contentType}
+                isH5p={this.state.isH5p}
+                loobjectid={this.state.LObjID}
+                topicTitle={this.state.topicTitle}
+                tocs={this.state.toc}
+                videoVtt={this.state.videoVtt}
+                videoSource={this.state.videoSource}
+                selectedLangName={this.state.selectedLangName}
+                framelist={this.state.Framelist}
+                audiotracklist={this.state.AudioTrackList}
+                IsMediaFile={this.state.IsMediaFile}
+                playedLo={this.state.playedLo}
+                noErrorLO={this.state.noErrorLO}
+                onTranslationClick={this.onTranslationClick}
+                onUpdateCheckbox={this.onUpdateCheckbox}
+                isCoursePlayer={this.state.isCoursePlayer}
+                isNormal={this.state.isNormal}
+                playList={this.playlist}
+                previousHandler={this.previousHandler}
+                nextHandler={this.nextHandler}
+              />
+            </div>
+            {/* {this.state.teacherMode === false ?*/}
+            <div className="col-xl-6">
+              {/* <h1>Right column</h1> */}
+              {this.state.isH5p ||
+              this.state.isNormal ||
+              (!this.state.transcript &&
+                !this.state.summary25 &&
+                !this.state.summary50 &&
+                this.state.keywords.length === 0) ? null : (
+                <Description
+                  isH5p={this.state.isH5p}
+                  srcLanguage={this.state.srcLanguage}
+                  isCoursePlayer={this.state.isCoursePlayer}
+                  IsMediaFile={this.state.IsMediaFile}
+                  title={this.state.title}
+                  topicTitle={this.state.topicTitle}
+                  transcriptShow={this.state.transcriptShow}
+                  transcript={this.state.transcript}
+                  studentNotes={this.state.studentNotes}
+                  handleOnChange={this.handleOnChange}
+                  handleOnChange2={this.handleOnChange2}
+                  submit={this.submit}
+                  summaryShow={this.state.summaryShow}
+                  currentSummary={this.state.currentSummary}
+                  KeywordsShow={this.state.KeywordsShow}
+                  notesShow={this.state.notesShow}
+                  keywords={this.state.keywords}
+                  onSummaryClick={this.onSummaryClick}
+                  onTranslationClick={this.onTranslationClick}
+                  onKeywordsClick={this.onKeywordsClick}
+                  onNotesClick={this.onNotesClick}
+                  updateKeywordsCount={this.updateKeywordsCount}
+                  updateNotesCount={this.updateNotesCount}
+                  saveNotes={this.saveNotes.bind(this)}
+                  availableLanguage={this.state.playedLo.vttSignedUrlarr}
+                />
+              )}
+            </div>
+          </div>
         </div>
-        <Footer />
-      </>
+      </div>
     );
   }
 }
 
-export default Videoall;
+export default OldVideoRow;

@@ -76,7 +76,6 @@ class CustomizedListItem extends React.Component {
   };
 
   getList = (list) => {
-    console.log(list);
     let { selectedListItemIndex, selectedListIndex } = this.props;
     if (list)
       return list.map((item, index) => (
@@ -153,7 +152,6 @@ class CustomizedListItem extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return <MList {...this.props} />;
   }
 }

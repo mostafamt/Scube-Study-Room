@@ -1,0 +1,21 @@
+.navbar {
+  padding: 1rem 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+
+  & button {
+    border: 0;
+    background-color: transparent;
+
+    & svg {
+      height: 1.6rem;
+      width: 1.6rem;
+    }
+  }
+
+  & img {
+    height: 4rem;
+    transform: translateY(3px);
+  }
+}

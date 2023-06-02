@@ -22,3 +22,7 @@ burgerToggle {
   background-color: aqua;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.group {
+  height: 100% !important;
+}

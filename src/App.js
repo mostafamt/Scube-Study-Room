@@ -18,11 +18,7 @@ const App = (props) => {
   if (!isAuthenticated) {
     return <div></div>;
   }
-  return (
-    <div style={{ height: "100%" }}>
-      <Videoall videoSource={videoSource} />
-    </div>
-  );
+  return <Videoall videoSource={videoSource} />;
 };
 
 export default App;

@@ -18,7 +18,6 @@ const VideoShow = (props) => {
     const play_data = query.get("play_data");
     if (play_data) {
       const decoded_play_data = JSON.parse(atob(play_data));
-      console.log("decoded_play_data= ", decoded_play_data);
       axios.get(`/lom/playlist/${decoded_play_data.id}`).then((res) => {
         setContentType(res.data.playList[0].contentType);
         if (res.data.type === "mo") {
@@ -33,9 +32,6 @@ const VideoShow = (props) => {
 
   const changeVideoSource = (id, language = "en") => {
     if (id) {
-      console.log("id= ", id);
-      console.log("language= ", language);
-
       axios.get(`/player/getPlayedLo/${id}/${language}/0`).then((response) => {
         setVideo(response.data.loSignedUrl);
         setLoading(false);
@@ -56,7 +52,6 @@ const VideoShow = (props) => {
   };
 
   const renderVideoAndAudio = () => {
-    console.log(contentType);
     if (contentType === "video/mp4") {
       return (
         <>
@@ -87,7 +82,6 @@ const VideoShow = (props) => {
         </div>
       );
     } else if (contentType === "application/pdf") {
-      console.log(video);
       return (
         <embed
           style={{

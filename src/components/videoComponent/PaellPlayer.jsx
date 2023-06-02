@@ -76,7 +76,6 @@ export default class PaellPlayer extends Component {
         .split(".")
         .pop()
         .trim();
-      console.log(fileextention);
       if (fileextention === "mp4") {
         this.setState({
           src: "/player/index-custom.html?id=multi-lang-audio&uid=" + rand,
@@ -129,7 +128,6 @@ export default class PaellPlayer extends Component {
         let x = this.props.videoSource.split(/\.*\?/)[0];
         let a = x.split(".");
         fileextention = a[a.length - 1];
-        console.log(fileextention);
       }
 
       if (fileextentionhtml === "html") {
@@ -160,31 +158,12 @@ export default class PaellPlayer extends Component {
         this.setState({
           src: "/player/index-custom.html?id=multi-lang-audio&uid=" + rand,
         });
-        // console.log(this.state.src);
       }
     } else {
       this.setState({
         src: this.props.videoSource,
       });
     }
-
-    // document.getElementById("1010").contentDocument.location.reload(true)
-    //for reloading instead of rand
-    // this.setState({
-    //    videoSource: this.props.videoSource,
-    //  })
-
-    try {
-      //1document.getElementById("1010").contentDocument.location.reload(true)
-      // window.open("https://www.w3schools.com");
-      //console.log("new window")
-    } catch (err) {}
-
-    // if(prevProps.loobjectid !== this.props.loobjectid){
-    //   this.setState({
-    //     loid: this.props.loobjectid
-    // });
-    //    }
   }
 
   extractHostname(url) {
@@ -205,15 +184,13 @@ export default class PaellPlayer extends Component {
     return hostname;
   }
   load(e) {
-    alert(e);
+    // alert(e);
   }
 
   error() {
     alert("error");
   }
   componentDidUpdate(prevProps) {
-    console.log("componentDidUpdate !!");
-    console.log("videoSource= ", this.props.videoSource);
     var rand = Math.floor(Math.random() * 1000000 + 1);
 
     if (this.props.videoSource !== this.state.videoSource) {
@@ -279,7 +256,6 @@ export default class PaellPlayer extends Component {
               this.props.videoSource,
           });
         } else if (fileextention === "pdf") {
-          console.log("kdasjsadsasajkdsajksahksak");
           this.setState({
             src:
               "https://docs.google.com/gview?url=" +
@@ -344,171 +320,98 @@ export default class PaellPlayer extends Component {
           this.setState({
             src: "/player/index-custom.html?id=multi-lang-audio&uid=" + rand,
           });
-          // console.log(this.state.src);
         }
       } else {
         this.setState({
           src: this.props.videoSource,
         });
       }
-
-      // document.getElementById("1010").contentDocument.location.reload(true)
-      //for reloading instead of rand
-      // this.setState({
-      //    videoSource: this.props.videoSource,
-      //  })
-      try {
-        //1  document.getElementById("1010").contentDocument.location.reload(true)
-        // window.open("https://www.w3schools.com");
-        //console.log("new window")
-      } catch (err) {}
     }
-
-    // if(prevProps.loobjectid !== this.props.loobjectid){
-    //   this.setState({
-    //     loid: this.props.loobjectid
-    // });
-    //    }
   }
 
   componentWillUnmount() {}
 
-  //shouldComponentUpdate(nextProps, nextState){
-
-  //   if(nextProps.loobjectid !== this.props.loobjectid){
-  //        this.setState({
-  //            loid: nextProps.loobjectid
-  //       });
-  //        this.setst();
-  //        return true;
-  //   }
-
-  //   return false;
-  //}
-
-  //loadavideo=(x,mp4url)=>{
-  //  console.log(x);
-  //  window.paella.load('playerContainerid',{})
-
-  //}
-
   render() {
-    console.log(this.state.src);
-
+    localStorage.setItem("label", this.props.videoSource);
+    localStorage.setItem("labelvtt", this.props.videoVtt);
+    localStorage.setItem("labeltitle", this.props.topicTitle);
+    localStorage.setItem("loobjcId", this.props.loobjectid);
+    localStorage.setItem("IsMediaFile", this.props.IsMediaFile);
+    localStorage.setItem("noErrorLO", this.props.noErrorLO);
+    localStorage.setItem("contentType", this.props.contentType);
+    localStorage.setItem(
+      "hostname",
+      this.extractHostname(this.props.videoSource)
+    );
+    localStorage.setItem("audioURL", this.state.youtubeaudioURL);
+    localStorage.setItem("vIDyoutube", this.state.vIDyoutube);
+    localStorage.setItem("keyframelist", JSON.stringify(this.props.framelist));
+    localStorage.setItem(
+      "keyaudiotracklist",
+      JSON.stringify(this.props.audiotracklist)
+    );
+    localStorage.setItem("keyplayedLo", JSON.stringify(this.props.playedLo));
     return (
       <div>
-        <div className="col-md-12">
-          <div className="emdeb-responsive">
-            {localStorage.setItem("label", this.props.videoSource)}
-            {localStorage.setItem("labelvtt", this.props.videoVtt)}
-            {localStorage.setItem("labeltitle", this.props.topicTitle)}
-            {localStorage.setItem("loobjcId", this.props.loobjectid)}
-            {localStorage.setItem("IsMediaFile", this.props.IsMediaFile)}
-            {localStorage.setItem("noErrorLO", this.props.noErrorLO)}
-            {localStorage.setItem("contentType", this.props.contentType)}
+        <iframe
+          id="1010"
+          title="eduedgePlayer"
+          frameBorder="0"
+          src={this.state.src}
+          // height="550"
+          width={"100%"}
+          height={
+            this.props.isH5p ? "650px" : this.props.IsMediaFile ? "500" : "480"
+          }
+          onError={this.error}
+          onLoad={this.load}
+        ></iframe>
 
-            {localStorage.setItem(
-              "hostname",
-              this.extractHostname(this.props.videoSource)
-            )}
-            {localStorage.setItem("audioURL", this.state.youtubeaudioURL)}
-            {localStorage.setItem("vIDyoutube", this.state.vIDyoutube)}
-
-            {localStorage.setItem(
-              "keyframelist",
-              JSON.stringify(this.props.framelist)
-            )}
-
-            {localStorage.setItem(
-              "keyaudiotracklist",
-              JSON.stringify(this.props.audiotracklist)
-            )}
-            {localStorage.setItem(
-              "keyplayedLo",
-              JSON.stringify(this.props.playedLo)
-            )}
-
-            {/* localStorage.setItem('Iframesrc',  "http://localhost:3000/player/index-custom.html?id=multi-lang-audio")}
-                        
-        { document.write(" <iframe  id='1010' name='frame' src='" + localStorage.getItem('Iframesrc') + "' width='550'  height='550'></iframe>")*/}
-
-            {false ? (
-              <VideoShow />
-            ) : (
-              <iframe
-                id="1010"
-                title="eduedgePlayer"
-                frameBorder="0"
-                src={this.state.src}
-                // height="550"
-                width={
-                  this.props.isH5p
-                    ? "1000px"
-                    : this.props.IsMediaFile
-                    ? "550px"
-                    : "500"
-                }
-                height={
-                  this.props.isH5p
-                    ? "650px"
-                    : this.props.IsMediaFile
-                    ? "500"
-                    : "480"
-                }
-                onerror={this.error}
-                onload={this.load}
-              ></iframe>
-            )}
-
-            {/*<iframe id='1010'  frameBorder="0" src="/player/index-custom.html?id=multi-lang-audio" width="550" height="550"></iframe>*/}
-          </div>
-
-          <div>
-            <input
-              type="checkbox"
-              defaultChecked={false}
-              name="scales"
-              id="scales"
-              onChange={(e) => {
-                this.handleChange({
-                  target: {
-                    name: e.target.name,
-                    value: e.target.checked,
-                  },
-                });
-              }} //;this.props.onTranslationClick}
-            />
-            <label id="label10" for="scales">
-              Show translated slides
-            </label>
-          </div>
-
-          {false &&
-          this.props.IsMediaFile === false &&
-          typeof this.props.playList === "undefined" ? (
-            <div className="btns-container" style={{ width: 550 }}>
-              <button
-                className="btn btn-info"
-                onClick={() => {
-                  this.props.previousHandler();
-                }}
-              >
-                Prev
-              </button>
-
-              <button
-                className="btn btn-info"
-                onClick={() => {
-                  this.props.nextHandler();
-                }}
-              >
-                Next
-              </button>
-            </div>
-          ) : (
-            <div></div>
-          )}
+        <div>
+          <input
+            type="checkbox"
+            defaultChecked={false}
+            name="scales"
+            id="scales"
+            onChange={(e) => {
+              this.handleChange({
+                target: {
+                  name: e.target.name,
+                  value: e.target.checked,
+                },
+              });
+            }} //;this.props.onTranslationClick}
+          />
+          <label id="label10" htmlFor="scales">
+            Show translated slides
+          </label>
         </div>
+
+        {false &&
+        this.props.IsMediaFile === false &&
+        typeof this.props.playList === "undefined" ? (
+          <div className="btns-container" style={{ width: 550 }}>
+            <button
+              className="btn btn-info"
+              onClick={() => {
+                this.props.previousHandler();
+              }}
+            >
+              Prev
+            </button>
+
+            <button
+              className="btn btn-info"
+              onClick={() => {
+                this.props.nextHandler();
+              }}
+            >
+              Next
+            </button>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
     );
   }

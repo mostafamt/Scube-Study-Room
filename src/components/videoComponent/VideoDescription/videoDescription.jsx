@@ -474,9 +474,7 @@ class Description extends Component {
   };
   render() {
     return (
-      <div className={this.props.IsMediaFile ? "text-show-Mo" : "text-show"}>
-        {/*<div className="title">{<h4>{this.props.title}</h4>}</div>*/}
-
+      <>
         <div
           className={
             this.props.IsMediaFile
@@ -742,7 +740,7 @@ class Description extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </div>
+      </>
     );
   }
 }
